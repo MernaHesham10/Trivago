@@ -1,0 +1,224 @@
+Drop table UserInfo cascade constraints;
+Drop table AdminInfo cascade constraints;
+Drop table HotelInfo cascade constraints;
+Drop table RoomData cascade constraints;
+Drop table DestinationData cascade constraints;
+Drop table PaymentData cascade constraints;
+Drop table BookingD cascade constraints;
+Drop table ServiceData cascade constraints;
+
+CREATE TABLE UserInfo(
+  UserID Number (13) PRIMARY KEY,
+  UserName varchar2(23) NOT NULL,
+  UserPassword varchar2(23) NOT NULL,
+  UserGender varchar2 (1), 
+  UserPhone Number(11)
+);
+CREATE TABLE AdminInfo(
+  AdminID Number (13) PRIMARY KEY,
+  AdminName varchar2(23) NOT NULL,
+  AdminPassword varchar2(23) NOT NULL,		
+  AdminGender varchar2 (1), 
+  AdminPhone Number(11)
+);
+CREATE TABLE HotelInfo(
+  HotelID Number (11) PRIMARY KEY,
+  HotelName varchar2(23) NOT NULL, HotelPhoneNumber Number (11), 
+  HotelLocation varchar2(23), AvailableNumberOfRooms Number(11)
+);
+
+CREATE TABLE RoomData(
+  RoomID Number (5) PRIMARY KEY,
+  RoomPrice Number(6), RoomStatus varchar2(23),
+  Capacity Number(4), HotelID Number(11) REFERENCES HotelInfo(HotelID),
+  ServiceID Number(11) REFERENCES ServiceData(ServiceID)
+);
+CREATE TABLE DestinationData(
+  DestID number(4) primary key,
+  DestName varchar2(23) not NULL, 
+  DestLocation Varchar2(23),
+  NumberOfHotels Number(30), 
+  HotelID Number(11) REFERENCES HotelInfo(HotelID)
+);
+CREATE TABLE PaymentData(
+  PaymentID Number(4) PRIMARY KEY, 
+  payMethod varchar2(23), Paydate Date, 
+  UserID number(13) References UserInfo(UserID)
+);
+ CREATE TABLE BookingD(
+  BookingID Number(4) PRIMARY KEY, 
+  BookingArrivalDate Date, BookingDepartureDate Date, BookingCost Number(5),
+  UserID number(13) References UserInfo(UserID),
+  PaymentID Number(4) References PaymentData(PaymentID)
+);
+ CREATE TABLE ServiceData(
+  ServiceID Number(11) PRIMARY KEY, 
+  lunch varchar2(1),
+  activities varchar2 (1),
+  UserID number(13) References UserInfo(UserID),
+  PaymentID Number(4) References PaymentData(PaymentID),
+  BookingID Number(4) References BookingD(BookingID)
+);
+
+insert into UserInfo values(
+1, 'Kristen Pattinson','kri123', 'F', 123
+  );
+insert into UserInfo values(
+2, 'Robert Stewart','Rob234', 'M', 234
+  );
+insert into UserInfo values(
+3, 'Taylor Pattinson','Tay345', 'M', 345
+  );
+  insert into UserInfo values(
+4, 'Rupert Lautner','Rup456', 'M', 456
+  );
+insert into UserInfo values(
+5, 'Daniel Grint','Dan567', 'M', 567
+  );
+insert into UserInfo values(
+6, 'Ralph Radcliffe','Ral678', 'M', 678
+  );
+insert into UserInfo values(
+7, 'Hank Fiennes','Han789', 'M', 789
+  );
+insert into UserInfo values(
+8, 'Jayma Cleese','Jay891', 'F', 891
+  );
+
+insert into UserInfo values(
+9, 'Sofia Luckey','Sof912', 'F', 912
+  );
+insert into UserInfo values(
+10, 'Joan Myers','Joan129', 'F', 129
+  );
+insert into AdminInfo values(
+1, 'Joan Luckey', ' JoanL123', 'F', 123
+  );
+insert into AdminInfo values(
+2, 'Daniel Radcliffe', 'DanielR345', 'M', 345
+  );
+insert into HotelInfo values(
+  1, 'InterContinental', 50, 'Cairo', 100
+  );
+insert into HotelInfo values(
+  2, 'Hotel Dusit Thani', 40, 'Alexandria', 150
+  );
+insert into HotelInfo values(
+  3, 'Royal Albatros Moderna', 30, ' Sharm el-Sheikh', 170
+  );
+insert into HotelInfo values(
+  4, 'Iberotel Palace', 35, 'Hurghada', 180
+  );
+insert into HotelInfo values(
+  5, 'Jaz Dahabeya', 44, 'Dahab', 190
+  );
+insert into RoomData values(
+  1, 3500, 'Booked', 2, 1,1
+  );
+insert into RoomData values(
+  2, 4000, 'Not Booked', 3, 1,2
+  );
+insert into RoomData values(
+  3, 2000, 'Not Booked', 2, 3,4
+  );
+insert into RoomData values(
+  4, 5000, 'Booked', 3, 2,2
+  );
+insert into RoomData values(
+  5, 1500, 'Not Booked', 3, 4,3
+  );
+insert into RoomData values(
+  6, 2700, 'Booked', 1, 4,3
+  );
+insert into RoomData values(
+  7, 3800, 'Not Booked', 1, 3,1
+  );
+insert into RoomData values(
+  8, 5500, 'Not Booked', 2, 5,1
+  );
+insert into RoomData values(
+  9, 4860, 'Booked', 1, 5,2
+  );
+insert into RoomData values(
+  10, 3100, 'Booked', 3, 5,2
+  );
+
+insert into DestinationData values(
+  1,'Cairo', ' 23.2 km to City centre', 50, 1
+  ) ;   
+insert into DestinationData values(
+  2,'Alexandria', ' 10 km to City centre', 40, 2
+  );    
+insert into DestinationData values(
+  3,'Sharm el-Sheikh', '4.8 km to City centre', 44, 3
+  );    
+insert into DestinationData values(
+  4,'Hurghada', '7.6 km to City centre' , 42, 4
+  );    
+insert into DestinationData values(
+  5,'Dahab', '0.1 km from the beach', 30, 5
+  );    
+insert into BookingD values(
+  1, '01-JAN-22', '05-JAN-22', 3500, 1, 1 
+  ); 
+insert into BookingD values(
+  2, '10-JAN-22', '12-JAN-22', 4500, 2, 2
+  );  
+insert into BookingD values(
+  3, '20-JAN-22', '24-JAN-22', 3500, 3, 3
+  );  
+insert into BookingD values(
+  4, '01-FEB-22', '05-FEB-22', 3500, 4, 4
+  );   
+insert into BookingD values(
+  5, '15-FEB-22', '20-FEB-22', 3500, 5, 5
+  );   
+ insert into PaymentData values(
+  1, 'Cash', '05-JAN-22', 1
+  );
+insert into PaymentData values(
+  2, 'Visa', '12-JAN-22', 2
+  );
+insert into PaymentData values(
+  3, 'Visa', '24-JAN-22', 3
+  );
+insert into PaymentData values(
+  4, 'Cash', '05-FEB-22', 4
+  );
+insert into PaymentData values(
+  5, 'Visa', '20-FEB-22', 5
+  );
+insert into ServiceData values(
+  1, 'Y', 'Y', 1,1,1
+  );
+  insert into ServiceData values(
+  2, 'Y', 'N', 2,2,2
+  );
+    insert into ServiceData values(
+  3, 'N', 'N', 3,3,3
+  );
+    insert into ServiceData values(
+  4, 'N', 'Y', 4,4,4
+  );
+
+
+create or replace
+PROCEDURE GETROOMS(Dest_Name in VARCHAR2, Hotel_Name in VARCHAR2, idout out sys_refcursor )
+AS
+BEGIN
+open idout for
+select r.RoomID
+from RoomData r, HotelInfo h , DestinationData d
+where r.HotelID = h.HotelID and h.HotelLocation = Dest_Name and h.HotelName = Hotel_Name and r.RoomStatus = 'Not Booked'
+and d.DestName = Dest_Name;
+END GETROOMS;
+
+create or replace
+PROCEDURE GETROOMData(Room_ID in Number, Hotel_Name in VARCHAR2, Room_Price out Number , Room_Capacity out number)
+AS
+BEGIN
+select r.RoomPrice , r.Capacity
+INTO Room_Price , Room_Capacity
+from RoomData r, HotelInfo h
+where h.HotelName = Hotel_Name and r.RoomID = Room_ID and r.HotelID = h.HotelID;
+END GETROOMData;
