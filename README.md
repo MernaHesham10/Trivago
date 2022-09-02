@@ -11,3 +11,6 @@
 - admin can modify data of hotels that the system displays, and users data.
 
 - in system, you can generate reports for total payment for any user, all data of each hotel.
+
+## Note
+- you must add the script of system in your database program, then run it.
